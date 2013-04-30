@@ -30,7 +30,7 @@ jQueryForm.contentElement('div#box', 'textarea', 'title', {value:5});
 ```
 
 #id:
-This will be the element id. This is necessary for the identification.
+This will be the element id. This is necessary, and individual for the identification.
 
 #attributes:
 `Content, class, name, rel, value, etc`. This is an `object`.

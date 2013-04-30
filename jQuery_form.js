@@ -120,16 +120,7 @@ var jQueryForm = {
         
 
         if (typeof type == this.s) {            
-            var v;
-            
-            if (typeof attributes == this.a) {
-                v = attributes["value"];
-            } else {
-                v = attributes.value;
-            }
-            
-            this.p.find("#"+id).html(v);
-            
+            this.p.find("#"+id).html(v);            
         } else {            
             this.p.find("#"+id).val(v);
         }

@@ -103,6 +103,21 @@ var jQueryForm = {
     
     createAttributes: function(type, id, attributes){
         this.p.find("#"+id).attr(attributes);
+        var v;
+        
+        switch (typeof attributes) {
+            case this.a:
+                if (typeof attributes["value"] != 'undefined')
+                    v = attributes["value"];
+                break;
+            case this.o:
+                if (typeof attributes.value != 'undefined')
+                    v = attributes.value;
+                break;
+            default:
+                break;
+        }
+        
 
         if (typeof type == this.s) {            
             var v;
@@ -113,11 +128,10 @@ var jQueryForm = {
                 v = attributes.value;
             }
             
-            if (type == 'textarea') {
-                this.p.find("#"+id).val(v);
-            } else {
-                this.p.find("#"+id).html(v);
-            }
+            this.p.find("#"+id).html(v);
+            
+        } else {            
+            this.p.find("#"+id).val(v);
         }
         
         return this;

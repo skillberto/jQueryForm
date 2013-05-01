@@ -10,5 +10,5 @@
     ],
     "require": {
         "components/jquery": "dev-master"
-    },
+    }
 }

@@ -15,7 +15,7 @@ All of this need: `parent, type, id, attributes` parameters.
 The `parent` is the jQuery selector, or jQuery instance. 
 For example: `div#box`.
 ```
-jQueryForm.contentElement('div#box', {input:'text'}, 'title', {value:5});
+new jQueryForm().contentElement('div#box', {input:'text'}, 'title', {value:5});
 ```
 
 In this example, the content will be in the div, what use #box id.
@@ -26,7 +26,7 @@ The type is really simple. `textarea, a, div, span, etc` `string` for the `norma
 `Object`, for `input`.
 See the previous example for input, and this, for `textarea`:
 ```
-jQueryForm.contentElement('div#box', 'textarea', 'title', {value:5});
+new jQueryForm().contentElement('div#box', 'textarea', 'title', {value:5});
 ```
 
 #id:
@@ -37,7 +37,7 @@ This will be the element id. This is necessary, and individual for the identific
 
 Every function return with the core object, so more implementation is easy:
 ```
-jQueryForm
+new jQueryForm()
     .contentElement('div#box', {input:'text'}, 'title', {value:5})
     .appendElement('div#box', {input:'password'}, 'name', {value:6, name: password});
 ```

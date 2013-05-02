@@ -2,6 +2,7 @@
     "name":         "skillberto/jqueryform",
     "description":  "This JavaScript file create HTML DOM with jQuery.",
     "keywords":     ["javascript","dom","html","jquery"],
+    "license": "MIT",
     "authors":      [
         {
             "name":     "Heiszler Norbert",

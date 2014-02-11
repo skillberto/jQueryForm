@@ -24,20 +24,9 @@ function jQueryForm ()
         }
     }
 
-    this.appendElement = function(parent, element, attributes, value) {
+    this.appendElement = function(parent, properties) {
 
-        var $j = getParent(parent).prepend(this.createElement(element, attributes, value));
-
-		if (this.returnJquery) {
-			return $j;
-		}
-		
-        return this;
-    }
-
-    this.prependElement = function(parent, element, attributes, value) {
-
-        var $j = getParent(parent).prepend(this.createElement(element, attributes, value));
+        var $j = getParent(parent).prepend(this.createElement(properties));
 
 		if (this.returnJquery) {
 			return $j;
@@ -46,9 +35,20 @@ function jQueryForm ()
         return this;
     }
 
-    this.insertElement = function(parent, element, attributes, value) {
+    this.prependElement = function(parent, properties) {
 
-        var $j = getParent(parent).html(this.createElement(element, attributes, value));
+        var $j = getParent(parent).prepend(this.createElement(properties));
+
+		if (this.returnJquery) {
+			return $j;
+		}
+		
+        return this;
+    }
+
+    this.insertElement = function(parent, properties) {
+
+        var $j = getParent(parent).html(this.createElement(properties));
 
         if (this.returnJquery) {
 			return $j;
@@ -58,20 +58,27 @@ function jQueryForm ()
     }
 
     /**
-     * Create jQuery node by name with attributes and value
+     * Create jQuery node by name with properties and value
      *
-     * @param string element
-     * @param object attributes
+     * @param object properties
      * @returns jQuery
      */
-    this.createElement = function(element, attributes, value) {
+    this.createElement = function(properties) {
+        //injected input not lose property
+        var properties = $.extend(true, {}, properties);
+
+        var element = properties.element;
+
+        delete properties.element;
+
         var $node = $(document.createElement(element));
 
-        if (typeof attributes != U) {
-            $node.attr(attributes);
-        }
+        if (typeof properties.value != U) {
 
-        if (typeof value != U) {
+            var value = properties.value;
+
+            delete properties.value;
+
             //for input
             $node.val(value);
             //for textarea
@@ -80,10 +87,14 @@ function jQueryForm ()
             $node.html(value);
         }
 
+        if (typeof properties != U) {
+            $node.attr(properties);
+        }
+
         return $node;
     }
 	
-	this.setJquery = function(set) {
+	this.getJquery = function(set) {
 	
 		this.returnJquery = set;
 		

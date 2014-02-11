@@ -1,39 +1,40 @@
 jQueryForm
 ==========
 
-Now, find three fancy functions:
+Now, find some fancy methods:
 
-`appendElement, prependElement, contentElement.`
+`appendElement, prependElement, insertElement, createElement.`
 
 The `appendElement` insert content, specified by the parameter, to the end of each element in the set of matched elements.
-The `prependElement` insert content into the beginning, and `contentElement` remove everything, and put the new content into the parent element.
+The `prependElement` insert content into the beginning, and `insertElement` remove everything, and put the new content into the parent element.
+The last function `createElement` is the core of the other ones. This method create a new jQuery instance from the parameters.
 
-All of this need: `parent, type, id, attributes` parameters.
+All of this need: `parent, element, attributes, value` parameters.
 
-#parent:
-
-The `parent` is the jQuery selector, or jQuery instance. 
+First parameter: `parent` 
+Type: string (jQuery selector) or object of jQuery instance.
+ 
 For example: `div#box`.
+
+Second parameter: `element`
+Type: string
+This will be the tag.
+`input` will be `<input ... />` or `div` will be `<div></div>`
+
+Third parameter: `attributes`
+Type: object or null string ('')
+If type is object, this will be use for `$().attr(attributes)`.
+
+The last parameter: `value`
+Type: string ('' or something).
+If the content is not empty, this will be the value or text/html of the created tag.
+
+In this example, the content (Jee, it's....) will be in the div, what use '#box' id:
+
 ```
-new jQueryForm().contentElement('div#box', {input:'text'}, 'title', {value:5});
+new jQueryForm().insertElement('div#box', 'input', {id: '#box_1'}, "Jee, it's a pretty content");
 ```
 
-In this example, the content will be in the div, what use #box id.
-
-#type:
-
-The type is really simple. `textarea, a, div, span, etc` `string` for the `normal tags`.
-`Object`, for `input`.
-See the previous example for input, and this, for `textarea`:
-```
-new jQueryForm().contentElement('div#box', 'textarea', 'title', {value:5});
-```
-
-#id:
-This will be the element id. This is necessary, and individual for the identification.
-
-#attributes:
-`Content, class, name, rel, value, etc`. This is an `object`.
 
 Every function return with the core object, so more implementation is easy:
 ```
@@ -41,3 +42,4 @@ new jQueryForm()
     .contentElement('div#box', {input:'text'}, 'title', {value:5})
     .appendElement('div#box', {input:'password'}, 'name', {value:6, name: password});
 ```
+If you want, you can change the return value with `setJquery` method. If this `true`, the methods return with jQuery instance, else with the jQueryForm instance.

@@ -4,147 +4,90 @@
  * 
  * @type Class
  * @author NorbertHeiszler <skillbertoo@gmail.com>
- * @version 1.0
+ * @version 2.0
  */
 function jQueryForm ()
 {
     var A = 'array', O = 'object', S = 'string', D = '',  P = '', U = 'undefined';
-    
-    /**
-     * Create HTML element from type and id
-     * 
-     * @param string|jQuery parent
-     * @param string|array|object type
-     * @param string id
-     * @returns jQueryForm
-     */
-    function initElement(parent, type, id) {
-        try {
-            var data;
 
-            if (typeof type == A || typeof type == O) {
-                $.each(type, function(k,v){
-                    if (k == 'input') {
-                        data = '<input type="'+v+'" id="'+id+'" />';
-                    } else {
-                        throw new Error("Invalid DOM type! For input array need, else string.");
-                    }
-                });
+	this.returnJquery = false;
+	
+    function getParent(parent) {
+        if ((!( parent instanceof jQuery)) && (typeof parent == S)) {
+            return $(parent);
+        } else {
+            if (parent instanceof jQuery) {
+                return parent;
             } else {
-                data = '<'+type+' id="'+id+'" ></'+type+'>';
+                throw new Exception("Invalid input for jQueryForm parent");
             }
-
-            D = data;
-
-            if (typeof parent == O) {
-                P=parent;
-            } else {
-                if (typeof parent == S) {
-                    P=$(parent);
-                } else {
-                    throw new EventException('Invalid parent Node type. jQuery instance, or string need.');
-                }
-            }
-            
-        } catch (Error) {
-            document.write('<span style="color: red; font-weight: bold;">'+Error+'</span><br>');
         }
-        
-        return this;
     }
-        
-    function initAttributes(type, id, attributes){
-        if (typeof attributes == U)
-            return this;
-        
-        P.find("#"+id).attr(attributes);
 
-        var v;
-        
-        switch (typeof attributes) {
-            case A:
-                if (typeof attributes["value"] != U) 
-                    v = attributes["value"];
-                
-                
-                break;
-            case O:
-                if (typeof attributes.value != U) 
-                    v = attributes.value;
-                                    
-                break;
-            case U:
-                return this;                
-        }
-        
-        
+    this.appendElement = function(parent, element, attributes, value) {
 
-        if (typeof type == S) {            
-            P.find("#"+id).html(v);            
-        } else {            
-            P.find("#"+id).val(v);
+        var $j = getParent(parent).prepend(this.createElement(element, attributes, value));
+
+		if (this.returnJquery) {
+			return $j;
+		}
+		
+        return this;
+    }
+
+    this.prependElement = function(parent, element, attributes, value) {
+
+        var $j = getParent(parent).prepend(this.createElement(element, attributes, value));
+
+		if (this.returnJquery) {
+			return $j;
+		}
+		
+        return this;
+    }
+
+    this.insertElement = function(parent, element, attributes, value) {
+
+        var $j = getParent(parent).html(this.createElement(element, attributes, value));
+
+        if (this.returnJquery) {
+			return $j;
+		}
+		
+        return this;
+    }
+
+    /**
+     * Create jQuery node by name with attributes and value
+     *
+     * @param string element
+     * @param object attributes
+     * @returns jQuery
+     */
+    this.createElement = function(element, attributes, value) {
+        var $node = $(document.createElement(element));
+
+        if (typeof attributes != U) {
+            $node.attr(attributes);
         }
-        
-        return this;
+
+        if (typeof value != U) {
+            //for input
+            $node.val(value);
+            //for textarea
+            $node.text(value);
+            //for else
+            $node.html(value);
+        }
+
+        return $node;
     }
-    
-    this.jQueryForm = function()
-    {
-        return this;
-    }
-    
-    /**
-     * Append HTML element.
-     * 
-     * @param string|jQuery parent
-     * @param string|array|object type
-     * @param string id
-     * @param array|object attributes
-     * @returns jQueryForm
-     */
-    this.appendElement = function(parent, type, id, attributes) {
-        initElement(parent, type, id);
-        
-        P.append(D);
-        initAttributes(type, id, attributes);
-        
-        return this;
-    }
-    
-    /**
-     * Prepend HTML element.
-     * 
-     * @param string|jQuery parent
-     * @param string|array|object type
-     * @param string id
-     * @param array|object attributes
-     * @returns jQueryForm
-     */
-    this.prependElement = function(parent, type, id, attributes) {
-        initElement(parent, type, id);
-        
-        P.prepend(D);
-        initAttributes(type, id, attributes);
-        
-        return this;
-    }
-    
-    /**
-     * Change HTML element.
-     * 
-     * @param string|jQuery parent
-     * @param string|array|object type
-     * @param string id
-     * @param array|object attributes
-     * @returns jQueryForm
-     */
-    this.contentElement = function(parent, type, id, attributes) {        
-        initElement(parent, type, id);
-       
-        P.html(D);
-        initAttributes(type, id, attributes);
-        
-        return this;
-    }
+	
+	this.setJquery = function(set) {
+	
+		this.returnJquery = set;
+		
+		return this;
+	};
 }
 

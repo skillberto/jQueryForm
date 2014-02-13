@@ -34,7 +34,7 @@ new jQueryForm().insertElement('div#box', {element: 'input', id: '#box_1', value
 Every function return with the core object, so more implementation is easy:
 ```
 new jQueryForm()
-    .contentElement('div#box', {input:'text'}, 'title', {value:5})
+    .insertElement('div#box', {input:'text'}, 'title', {value:5})
     .appendElement('div#box', {input:'password'}, 'name', {value:6, name: password});
 ```
 If you want, you can change the return value with `getJquery` method. If this `true`, the methods return with jQuery instance, else with the jQueryForm instance.

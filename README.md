@@ -9,7 +9,7 @@ The `appendElement` insert content, specified by the parameter, to the end of ea
 The `prependElement` insert content into the beginning, and `insertElement` remove everything, and put the new content into the parent element.
 The last function `createElement` is the core of the other ones. This method create a new jQuery instance from the parameters.
 
-All of this need: `parent, attributes` parameters.
+All of this need: `parent, parameters` parameters.
 
 First parameter: `parent`.
 Type: string (jQuery selector) or object of jQuery instance.
